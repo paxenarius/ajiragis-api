@@ -15,8 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from dashboard.views import Dashboard
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/v1/', include('api.urls')),
+    path('ajira-translator/admin/', admin.site.urls),
+    path('ajira-translator/api/v1/', include('api.urls')),
+    path('ajira-translator/users/', include('users.urls')),
+    path('ajira-translator/users/', include('django.contrib.auth.urls')),
+    path('ajira-translator/', Dashboard.as_view(), name='dashboard'),
+    path('ajira-translator/accounts/', include('allauth.urls')),
 ]

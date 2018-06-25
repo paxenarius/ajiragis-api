@@ -22,6 +22,6 @@ urlpatterns = [
     path('ajira-translator/api/v1/', include('api.urls')),
     path('ajira-translator/users/', include('users.urls')),
     path('ajira-translator/users/', include('django.contrib.auth.urls')),
-    path('ajira-translator/', Dashboard.as_view(), name='dashboard'),
+    path('ajira-translator/', include('translation.urls')),
     path('ajira-translator/accounts/', include('allauth.urls')),
 ]

@@ -1,16 +1,44 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
-from .models import Translation, Word, Language
+from django.views.generic import CreateView, ListView, DetailView
+from rest_framework.generics import ListAPIView, ListCreateAPIView
+from .models import Translation, Word, Language, LanguageTranslateTo
+from .serializers import TranslationSerializer
+
+
+class LanguageSelectListView(ListView):
+    model = Language
+    template_name = 'translation/language-select.html'
 
 
 class TranslationListView(ListView):
     model = Translation
 
 
-class TranslatorCreateView(CreateView):
+class TranslationCreateView(CreateView):
     model = Translation
-    # success_url = reverse_lazy()
+    success_url = reverse_lazy('language-select')
+    template_name = 'translation/translation-create.html'
+    fields = ['word', 'translate_to', 'translation']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        word = Word.objects.first()
+        context['translate_to'] = LanguageTranslateTo.objects.all()
+        context['language_selected'] = word.language
+        context['word'] = word
+        print(context)
+        return context
+
+    def form_valid(self, form):
+        form = super().form_valid(form)
+        print(form)
+        return form
+
+
+class TranslationApiView(ListCreateAPIView):
+    queryset = Translation.objects.all()
+    serializer_class = TranslationSerializer
 
 
 class WordListView(ListView):
@@ -19,11 +47,3 @@ class WordListView(ListView):
 
 class WordCreateView(CreateView):
     model = Word
-
-
-class LanguageListView(ListView):
-    model = Language
-
-
-class LanguageCreateView(CreateView):
-    model = Language

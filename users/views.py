@@ -15,4 +15,4 @@ class SignUp(generic.CreateView):
 
 class UserListView(generics.ListCreateAPIView):
     queryset = models.CustomUser.objects.all()
-    serializer_class = serializers.UserSerializer
+    serializer_class = serializers.CustomUserSerializer

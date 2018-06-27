@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from users.models import CustomUser
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Language(models.Model):
@@ -30,6 +31,9 @@ class Translation(models.Model):
     word = models.ForeignKey(Word, on_delete=models.PROTECT)
     translate_to = models.ForeignKey(LanguageTranslateTo, on_delete=models.PROTECT, null=True, blank=True)
     translation = models.CharField(max_length=255)
+    confidence_level = models.PositiveIntegerField(
+        default=1,
+        validators=[MaxValueValidator(10), MinValueValidator(1)])
     approved = models.BooleanField(default=False)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

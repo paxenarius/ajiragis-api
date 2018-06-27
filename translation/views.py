@@ -61,6 +61,7 @@ class PaymentApiView(ListCreateAPIView):
     queryset = Payment.objects.all()
     serializer_class = Paymentserializer
 
+
 class WordListView(ListView):
     model = Word
 

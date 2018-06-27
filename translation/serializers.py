@@ -6,7 +6,7 @@ class TranslationSerializer(ModelSerializer):
 
     class Meta:
         model = Translation
-        fields = ('id', 'user', 'word', 'translate_to', 'translation')
+        fields = ('id', 'user', 'word', 'translate_to', 'translation', 'confidence_level')
 
 
 class WordSerializer(ModelSerializer):

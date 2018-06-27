@@ -40,6 +40,7 @@ class Translation(models.Model):
 
 class Payment(models.Model):
     translation = models.ForeignKey(Translation, on_delete=models.PROTECT)
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
     amount = models.DecimalField(decimal_places=2, max_digits=10, default=1)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

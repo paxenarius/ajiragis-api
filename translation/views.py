@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
 from rest_framework.generics import ListAPIView, ListCreateAPIView
+from rest_framework.response import Response
 from .models import Translation, Word, Language, LanguageTranslateTo, Payment
 from .serializers import TranslationSerializer, WordSerializer, LanguageSerializer, LanguageTranslateToSerializer, Paymentserializer
 
@@ -38,26 +39,49 @@ class TranslationCreateView(CreateView):
 
 
 class TranslationApiView(ListCreateAPIView):
+    """
+    Returns a list of all translations
+    """
     queryset = Translation.objects.all()
     serializer_class = TranslationSerializer
 
+    def post(self, request, *args, **kwargs):
+        instance = super().post(request, *args, **kwargs)
+        Payment.objects.create(
+            translation_id=instance.data.get('id'),
+            user_id=instance.data.get('user')
+        )
+        return Response(instance.data)
+
 
 class WordApiView(ListCreateAPIView):
+    """
+    Returns a list of all words
+    """
     queryset = Word.objects.all()
     serializer_class = WordSerializer
 
 
 class LanguageApiView(ListCreateAPIView):
+    """
+    Returns a list of all available languages that words related are translated
+    """
     queryset = Language.objects.all()
     serializer_class = LanguageSerializer
 
 
 class LanguageTranlateToApiView(ListCreateAPIView):
+    """
+    Returns a list of languages that words are to translate to
+    """
     queryset = LanguageTranslateTo.objects.all()
     serializer_class = LanguageTranslateToSerializer
 
 
 class PaymentApiView(ListCreateAPIView):
+    """
+    Returns a list of payments done on translations
+    """
     queryset = Payment.objects.all()
     serializer_class = Paymentserializer
 

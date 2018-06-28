@@ -14,5 +14,8 @@ class SignUp(generic.CreateView):
 
 
 class UserListView(generics.ListCreateAPIView):
+    """
+    Return list of all existing users
+    """
     queryset = models.CustomUser.objects.all()
     serializer_class = serializers.CustomUserSerializer

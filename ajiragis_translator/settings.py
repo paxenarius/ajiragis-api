@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'corsheaders',
     'crispy_forms',
+    'rest_framework_swagger',
     'users',
     'api',
     'dashboard',

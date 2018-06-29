@@ -11,13 +11,6 @@ class Language(models.Model):
         return self.name
 
 
-class LanguageTranslateTo(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-
 class Word(models.Model):
     language = models.ForeignKey(Language, on_delete=models.PROTECT)
     word = models.CharField(max_length=255)
@@ -29,7 +22,7 @@ class Word(models.Model):
 class Translation(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
     word = models.ForeignKey(Word, on_delete=models.PROTECT)
-    translate_to = models.ForeignKey(LanguageTranslateTo, on_delete=models.PROTECT, null=True, blank=True)
+    translate_to = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True)
     translation = models.CharField(max_length=255)
     confidence_level = models.PositiveIntegerField(
         default=1,

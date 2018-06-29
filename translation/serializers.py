@@ -1,4 +1,4 @@
-from .models import Translation, Word, Language, LanguageTranslateTo, Payment
+from .models import Translation, Word, Language, Language, Payment
 from rest_framework.serializers import ModelSerializer, HyperlinkedModelSerializer
 
 
@@ -20,13 +20,6 @@ class LanguageSerializer(ModelSerializer):
 
     class Meta:
         model = Language
-        fields = ('id', 'name')
-
-
-class LanguageTranslateToSerializer(ModelSerializer):
-
-    class Meta:
-        model = LanguageTranslateTo
         fields = ('id', 'name')
 
 

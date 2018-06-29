@@ -4,8 +4,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
 from rest_framework.generics import ListAPIView, ListCreateAPIView
 from rest_framework.response import Response
-from .models import Translation, Word, Language, LanguageTranslateTo, Payment
-from .serializers import TranslationSerializer, WordSerializer, LanguageSerializer, LanguageTranslateToSerializer, Paymentserializer
+from .models import Translation, Word, Language, Payment
+from .serializers import TranslationSerializer, WordSerializer, LanguageSerializer, Paymentserializer
 
 
 class LanguageSelectListView(ListView):
@@ -26,7 +26,7 @@ class TranslationCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         word = Word.objects.first()
-        context['translate_to'] = LanguageTranslateTo.objects.all()
+        context['translate_to'] = Language.objects.all()
         context['language_selected'] = word.language
         context['word'] = word
         print(context)
@@ -68,14 +68,6 @@ class LanguageApiView(ListCreateAPIView):
     """
     queryset = Language.objects.all()
     serializer_class = LanguageSerializer
-
-
-class LanguageTranlateToApiView(ListCreateAPIView):
-    """
-    Returns a list of languages that words are to translate to
-    """
-    queryset = LanguageTranslateTo.objects.all()
-    serializer_class = LanguageTranslateToSerializer
 
 
 class PaymentApiView(ListCreateAPIView):

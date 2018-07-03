@@ -1,7 +1,9 @@
 from django.conf import settings
 from django.db import models
+import json
 from users.models import CustomUser
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core import serializers
 
 
 class Language(models.Model):
@@ -9,6 +11,16 @@ class Language(models.Model):
 
     def __str__(self):
         return self.name
+
+    def words(self):
+        # return json.JSONEncoder().encode(self.word_set.all())
+        words = []
+        for w in self.word_set.all():
+            words.append({
+                w.id, w.word
+            })
+
+        return words
 
 
 class Word(models.Model):

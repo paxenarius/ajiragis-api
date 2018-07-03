@@ -2,10 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
-from rest_framework.generics import ListAPIView, ListCreateAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from .models import Translation, Word, Language, Payment
-from .serializers import TranslationSerializer, WordSerializer, LanguageSerializer, Paymentserializer
+from .serializers import TranslationSerializer, WordSerializer, LanguageSerializer, Paymentserializer, LanguageDetailSerializer
 
 
 class LanguageSelectListView(ListView):
@@ -68,6 +68,15 @@ class LanguageApiView(ListCreateAPIView):
     """
     queryset = Language.objects.all()
     serializer_class = LanguageSerializer
+
+
+class LanguageDetailApiView(RetrieveAPIView):
+    queryset = Language
+    serializer_class = LanguageDetailSerializer
+
+    # def get_queryset(self):
+    #     print(self)
+    #     return Language.objects.all()
 
 
 class PaymentApiView(ListCreateAPIView):

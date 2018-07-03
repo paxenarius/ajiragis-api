@@ -17,7 +17,7 @@ class Language(models.Model):
         words = []
         for w in self.word_set.all():
             words.append({
-                w.id, w.word
+                w.id: w.word
             })
 
         return words

@@ -19,3 +19,11 @@ class UserListView(generics.ListCreateAPIView):
     """
     queryset = models.CustomUser.objects.all()
     serializer_class = serializers.CustomUserSerializer
+
+
+class UserDetailView(generics.RetrieveAPIView):
+    """
+    Return users details
+    """
+    queryset = models.CustomUser.objects.all()
+    serializer_class = serializers.CustomUserDetailSerializer

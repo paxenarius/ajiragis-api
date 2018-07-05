@@ -32,7 +32,7 @@ class Word(models.Model):
 
 
 class Translation(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name='translations')
     word = models.ForeignKey(Word, on_delete=models.PROTECT)
     translate_to = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True)
     translation = models.CharField(max_length=255)
@@ -44,7 +44,7 @@ class Translation(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "%s --> %s" % (self.word.word, self.translation)
+        return "%s: %s" % (self.word.word, self.translation)
 
 
 class Payment(models.Model):

@@ -1,8 +1,18 @@
 from rest_framework import serializers
-from . import models
+from .models import CustomUser
+from translation.serializers import TranslationSerializer
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.CustomUser
-        fields = ('email', 'username', 'is_superuser')
+        model = CustomUser
+        fields = ('id', 'email', 'username', 'is_superuser')
+
+
+class CustomUserDetailSerializer(serializers.ModelSerializer):
+    translations = TranslationSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ('id', 'email', 'username', 'is_superuser', 'translations')
+

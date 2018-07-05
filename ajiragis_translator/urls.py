@@ -19,11 +19,11 @@ from django.urls import path, include
 from dashboard.views import Dashboard
 
 urlpatterns = [
-    path('ajira-translator/admin/', admin.site.urls),
-    path('ajira-translator/api/v1/', include('api.urls')),
-    path('ajira-translator/users/', include('users.urls')),
-    path('ajira-translator/users/', include('django.contrib.auth.urls')),
-    path('ajira-translator/', include('translation.urls')),
-    path('ajira-translator/accounts/', include('allauth.urls')),
-    url(r'^ajira-translator/o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    path('ajiragis/admin/', admin.site.urls),
+    path('ajiragis/api/v1/', include('api.urls')),
+    path('ajiragis/users/', include('users.urls')),
+    path('ajiragis/users/', include('django.contrib.auth.urls')),
+    path('ajiragis/', include('translation.urls')),
+    path('ajiragis/accounts/', include('allauth.urls')),
+    url(r'^ajiragis/o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]

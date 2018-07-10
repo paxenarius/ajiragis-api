@@ -7,7 +7,7 @@ from django.core import serializers
 
 
 class Language(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name
@@ -23,9 +23,17 @@ class Language(models.Model):
         return words
 
 
+class PartOfSpeech(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Word(models.Model):
     language = models.ForeignKey(Language, on_delete=models.PROTECT)
     word = models.CharField(max_length=255)
+    part_of_speech = models.ForeignKey(PartOfSpeech, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return "%s --> %s" % (self.word, self.language.name)

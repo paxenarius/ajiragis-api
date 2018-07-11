@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'crispy_forms',
     'rest_framework_swagger',
+    'django_filters',
     'users',
     'api',
     'dashboard',
@@ -172,4 +173,8 @@ LOGGING = {
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
         },
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }

@@ -68,6 +68,7 @@ class LanguageApiView(ListCreateAPIView):
     """
     queryset = Language.objects.all()
     serializer_class = LanguageSerializer
+    filter_fields = ('iso_639_1_code', 'iso_639_2_code')
 
 
 class LanguageDetailApiView(RetrieveAPIView):

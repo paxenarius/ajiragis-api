@@ -25,7 +25,7 @@ class LanguageSerializer(ModelSerializer):
 
     class Meta:
         model = Language
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'iso_639_1_code','iso_639_2_code','alternative_names')
 
 
 class LanguageDetailSerializer(HyperlinkedModelSerializer):

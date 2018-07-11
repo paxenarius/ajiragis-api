@@ -7,13 +7,17 @@ from django.core import serializers
 
 
 class Language(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=50)
+    iso_639_1_code = models.CharField(max_length=2)
+    iso_639_2_code = models.CharField(max_length=3, unique=True)
+
+    #TODO convert alternative_names to JSON field
+    alternative_names = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.name
 
     def words(self):
-        # return json.JSONEncoder().encode(self.word_set.all())
         words = []
         for w in self.word_set.all():
             words.append({

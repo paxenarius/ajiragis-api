@@ -62,6 +62,11 @@ class WordApiView(ListCreateAPIView):
     serializer_class = WordSerializer
 
 
+class WordDetailApiView(RetrieveAPIView):
+    queryset = Word.objects.all()
+    serializer_class = WordSerializer
+
+
 class LanguageApiView(ListCreateAPIView):
     """
     Returns a list of all available languages that words related are translated
@@ -71,7 +76,7 @@ class LanguageApiView(ListCreateAPIView):
 
 
 class LanguageDetailApiView(RetrieveAPIView):
-    queryset = Language
+    queryset = Language.objects.all()
     serializer_class = LanguageDetailSerializer
 
     # def get_queryset(self):
@@ -86,10 +91,3 @@ class PaymentApiView(ListCreateAPIView):
     queryset = Payment.objects.all()
     serializer_class = Paymentserializer
 
-
-class WordListView(ListView):
-    model = Word
-
-
-class WordCreateView(CreateView):
-    model = Word

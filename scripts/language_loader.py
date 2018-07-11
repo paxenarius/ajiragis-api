@@ -1,9 +1,12 @@
 import csv
+import logging
 import os
 
 from django.conf import settings
 
 from translation.models import Language
+
+LOGGER = logging.getLogger(__name__)
 
 
 def extract_names(names):
@@ -22,6 +25,7 @@ def load_languages():
         for row in data:
             try:
                 Language.objects.get(iso_639_2_code=row[0])
+                LOGGER.info("{} already exists".format(row[0]))
             except Language.DoesNotExist:
                 actual_name, alt_names = extract_names(row[2])
                 Language.objects.create(

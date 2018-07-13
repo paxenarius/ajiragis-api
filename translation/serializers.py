@@ -12,20 +12,18 @@ class TranslationSerializer(ModelSerializer):
 
 
 class WordSerializer(ModelSerializer):
+    iso_639_2_code = serializers.ReadOnlyField(source='language.iso_639_2_code')
 
     class Meta:
         model = Word
-        fields = ('id', 'word', 'language')
-        # extra_kwargs = {
-        #     'language': {'view_name': 'languages', 'lookup_field': 'name'},
-        # }
+        fields = ('id', 'word', 'language', 'iso_639_2_code')
 
 
 class LanguageSerializer(ModelSerializer):
 
     class Meta:
         model = Language
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'iso_639_1_code','iso_639_2_code','alternative_names')
 
 
 class LanguageDetailSerializer(HyperlinkedModelSerializer):

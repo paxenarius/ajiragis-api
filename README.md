@@ -14,6 +14,8 @@ $ python3 manage.py runserver
 
 ```bash
 $ python3 manage.py runserver --settings=ajiragis_translator.dev_settings
+```
+
 
 Application will run on port [8000](http://localhost:8000)
 
@@ -22,3 +24,4 @@ Application will run on port [8000](http://localhost:8000)
 
 ```bash
 $ python3 manage.py load_languages
+```

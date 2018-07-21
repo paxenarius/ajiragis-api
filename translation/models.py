@@ -6,6 +6,17 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core import serializers
 
 
+PARTS_OF_SPEECH =(
+    ('NOUN', 'NOUN'),
+    ('PRONOUN', 'PRONOUN'),
+    ('VERB', 'VERB'),
+    ('ADJECTIVE', 'ADJECTIVE'),
+    ('ADVERB', 'ADVERB'),
+    ('PREPOSITION', 'PREPOSITION'),
+    ('CONJUCTION', 'CONJUCTION'),
+    ('INTERJECTION', 'INTERJECTION'),
+)
+
 class Language(models.Model):
     name = models.CharField(max_length=50)
     iso_639_1_code = models.CharField(max_length=2, null=True, blank=True)
@@ -30,6 +41,8 @@ class Language(models.Model):
 class Word(models.Model):
     language = models.ForeignKey(Language, on_delete=models.PROTECT)
     word = models.CharField(max_length=255)
+    example_sentence = models.TextField(max_length=255)
+    part_of_speech = models.CharField(max_length=50, choices=PARTS_OF_SPEECH)
 
     def __str__(self):
         return "%s --> %s" % (self.word, self.language.name)

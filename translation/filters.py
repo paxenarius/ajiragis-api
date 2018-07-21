@@ -8,7 +8,7 @@ class WordFilter(django_filters.FilterSet):
 
     class Meta:
         model = Word
-        fields = ['word', 'language', 'iso_639_2_code']
+        fields = ['word', 'language', 'iso_639_2_code', 'part_of_speech']
 
     def word_iso_code_fiiler(self, queryset, name, value):
         return queryset.filter(language__iso_639_2_code=value)

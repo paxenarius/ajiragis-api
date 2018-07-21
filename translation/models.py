@@ -8,7 +8,7 @@ from django.core import serializers
 
 class Language(models.Model):
     name = models.CharField(max_length=50)
-    iso_639_1_code = models.CharField(max_length=2)
+    iso_639_1_code = models.CharField(max_length=2, null=True, blank=True)
     iso_639_2_code = models.CharField(max_length=3, unique=True)
 
     #TODO convert alternative_names to JSON field

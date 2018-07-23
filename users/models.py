@@ -7,10 +7,3 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-
-    # def translations(self):
-    #     translations = []
-    #     for translation in self.translation_set.all():
-    #         translations.append({
-    #             translation.id: translation.word.word
-    #         })

@@ -5,10 +5,14 @@ from rest_framework.serializers import ModelSerializer, HyperlinkedModelSerializ
 
 
 class TranslationSerializer(ModelSerializer):
+    iso_639_2_code = serializers.ReadOnlyField(source='word.language.iso_639_2_code')
+    part_of_speech = serializers.ReadOnlyField(source='word.part_of_speech')
+    example_sentence = serializers.ReadOnlyField(source='word.example_sentence')
 
     class Meta:
         model = Translation
-        fields = ('id', 'user', 'word', 'translate_to', 'translation', 'confidence_level')
+        fields = ('id', 'user', 'word', 'translate_to', 'translation', 'confidence_level',
+            'part_of_speech', 'example_sentence', 'iso_639_2_code')
 
 
 class WordSerializer(ModelSerializer):
@@ -16,7 +20,9 @@ class WordSerializer(ModelSerializer):
 
     class Meta:
         model = Word
-        fields = ('id', 'word', 'language', 'iso_639_2_code')
+        fields = (
+            'id', 'word', 'language', 'iso_639_2_code', 'example_sentence', 'part_of_speech'
+        )
 
 
 class LanguageSerializer(ModelSerializer):

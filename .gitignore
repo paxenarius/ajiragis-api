@@ -103,5 +103,4 @@ venv.bak/
 .mypy_cache/
 
 .idea/
-migrations
 staticroot

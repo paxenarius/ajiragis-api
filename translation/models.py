@@ -71,6 +71,7 @@ class Translation(models.Model):
     word = models.ForeignKey(Word, on_delete=models.PROTECT)
     translate_to = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True)
     translation = models.CharField(max_length=255)
+    example_sentence = models.TextField(help_text='An example sentence in the to language')
     confidence_level = models.PositiveIntegerField(
         default=1,
         validators=[MaxValueValidator(10), MinValueValidator(1)])

@@ -4,8 +4,7 @@ from django.views.generic import TemplateView
 from rest_framework.views import APIView, Response
 
 from translation.models import Translation, Payment
-from translation.serializers import TranslationSerializer, Paymentserializer
-from users.serializers import CustomUserDetailSerializer
+from translation.serializers import TranslationSerializer
 
 
 class Dashboard(TemplateView):
@@ -20,9 +19,9 @@ class DashboardAPI(APIView):
     def get_work_data(self):
         """Returns the number of translations and data inputs that a user has made"""
         user_data = Translation.objects.filter(user=self.request.user)
-        serialiazer = TranslationSerializer(data=user_data, many=True)
-        if serialiazer.is_valid():
-            return serialiazer.data
+        serializer = TranslationSerializer(data=user_data, many=True)
+        if serializer.is_valid():
+            return serializer.data
         return {}
 
     def get_wallet_data(self):
@@ -32,18 +31,24 @@ class DashboardAPI(APIView):
 
         # TODO Need to factor in historical data what if the points per task change?
         """
-        translation_data = Payment.objects.filter(user=self.request.user).count()
+        translation_payment = sum(
+            obj.amount for obj in Payment.objects.filter(user=self.request.user)
+        )
         return {
-            "contributions": 0,
-            "translations": translation_data
+            "contribution_payment": 0,
+            "translation_payment": translation_payment
         }
 
     def get_profile(self):
         """Details of the logged in User"""
-        serialiazer = CustomUserDetailSerializer(data=self.request.user)
-        if serialiazer.is_valid():
-            return serialiazer.data
-        return {}
+        data = {
+            "username": self.request.user.username,
+            "first_name": self.request.user.first_name,
+            "last_name": self.request.user.last_name,
+            "email": self.request.user.email,
+
+        }
+        return data
 
     def get_notifications(self):
         """A list of notifications for the logged in User"""

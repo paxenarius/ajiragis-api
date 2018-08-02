@@ -21,7 +21,7 @@ urlpatterns = [
     path('languages/', LanguageApiView.as_view(), name='languages-list-api'),
     path('languages/<pk>/', LanguageDetailApiView.as_view()),
     path('payments/', PaymentApiView.as_view()),
-    path('dashboard/', DashboardAPI.as_view(), name='dashboard'),
+    path('dashboard/', DashboardAPI.as_view(), name='dashboard-api'),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'doc/', schema_view)

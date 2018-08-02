@@ -4,7 +4,7 @@ from .views import TranslationListView, TranslationCreateView, LanguageSelectLis
 
 
 urlpatterns = [
-    path('dashboard/', Dashboard.as_view(), name='dashboard'),
+    path('dashboard_dep/', Dashboard.as_view(), name='dashboard'),
     path('', LanguageSelectListView.as_view(), name='language-select'),
     path('list/', Dashboard.as_view(), name='translation-list'),
     path('<int:pk>/create/', TranslationCreateView.as_view(), name='translation-create'),

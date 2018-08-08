@@ -82,9 +82,16 @@ class Translation(models.Model):
     def __str__(self):
         return "%s: %s" % (self.word.word, self.translation)
 
+    def payment_detail(self):
+        return [{
+            "amount": payment.amount,
+            "approved": payment.approved
+        } for payment in self.translation_payment.all()]
+
 
 class Payment(models.Model):
-    translation = models.ForeignKey(Translation, on_delete=models.PROTECT)
+    translation = models.ForeignKey(Translation, on_delete=models.PROTECT,
+        related_name='translation_payment')
     user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
     amount = models.DecimalField(decimal_places=2, max_digits=10, default=1)
     approved = models.BooleanField(default=False)

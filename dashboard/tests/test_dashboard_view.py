@@ -20,10 +20,11 @@ class TestDashBoardView(APITestCase):
             "first_name": user.first_name,
             "last_name": user.last_name,
             "email": user.email,
+            'last_login': user.last_login
 
         }
         assert response.data == {
-            'my_work': {},
+            'my_work': {'translations_count': 0},
             'my_wallet': {'contribution_payment': 0, 'translation_payment': 0},
             'my_profile': user_data, 'notifications': []
         }
@@ -41,10 +42,11 @@ class TestDashBoardView(APITestCase):
             "first_name": user.first_name,
             "last_name": user.last_name,
             "email": user.email,
+            'last_login': user.last_login
 
         }
         assert response.data == {
-            'my_work': {},
+            'my_work': {'translations_count': 1},
             'my_wallet': {'contribution_payment': 0, 'translation_payment': Decimal('10.00')},
             'my_profile': user_data, 'notifications': []
         }

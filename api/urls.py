@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from django.urls import include, path
 
+from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_swagger.views import get_swagger_view
 
 from dashboard.views import DashboardAPI
@@ -23,6 +24,7 @@ urlpatterns = [
     path('payments/', PaymentApiView.as_view()),
     path('dashboard/', DashboardAPI.as_view(), name='dashboard-api'),
     path('rest-auth/', include('rest_auth.urls')),
+    path('get_token/', obtain_auth_token, name='get_user_token'),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'doc/', schema_view)
 ]

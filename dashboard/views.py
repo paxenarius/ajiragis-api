@@ -18,11 +18,10 @@ class DashboardAPI(APIView):
     """
     def get_work_data(self):
         """Returns the number of translations and data inputs that a user has made"""
-        user_data = Translation.objects.filter(user=self.request.user)
-        serializer = TranslationSerializer(data=user_data, many=True)
-        if serializer.is_valid():
-            return serializer.data
-        return {}
+        translations_count = Translation.objects.filter(user=self.request.user).count()
+        return {
+            "translations_count": translations_count
+        }
 
     def get_wallet_data(self):
         """
@@ -46,6 +45,7 @@ class DashboardAPI(APIView):
             "first_name": self.request.user.first_name,
             "last_name": self.request.user.last_name,
             "email": self.request.user.email,
+            "last_login": self.request.user.last_login
 
         }
         return data

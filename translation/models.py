@@ -75,6 +75,7 @@ class Translation(models.Model):
     confidence_level = models.PositiveIntegerField(
         default=1,
         validators=[MaxValueValidator(10), MinValueValidator(1)])
+    part_of_speech = models.CharField(max_length=50, choices=PARTS_OF_SPEECH)
     approved = models.BooleanField(default=False)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

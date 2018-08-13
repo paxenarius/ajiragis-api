@@ -50,18 +50,6 @@ class TranslationApiView(ListCreateAPIView):
     serializer_class = TranslationSerializer
     filter_fields = ('user', )
 
-    def post(self, request, *args, **kwargs):
-        """
-        As the a translation is being made, a payment record is made.
-        The default approved status is False. The default amount/points is 1.
-        """
-        instance = super().post(request, *args, **kwargs)
-        Payment.objects.create(
-            translation_id=instance.data.get('id'),
-            user_id=instance.data.get('user')
-        )
-        return Response(instance.data)
-
 
 class WordApiView(ListCreateAPIView):
     """

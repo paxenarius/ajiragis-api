@@ -19,11 +19,16 @@ class TranslationSerializer(InjectUserMixin, serializers.ModelSerializer):
     part_of_speech = serializers.ReadOnlyField(source='word.part_of_speech')
     example_sentence = serializers.ReadOnlyField(source='word.example_sentence')
     payment_detail = serializers.ReadOnlyField()
+    word_name = serializers.ReadOnlyField(source='word.word')
+    from_language_name = serializers.ReadOnlyField(source='word.language.name')
+    to_language_name = serializers.ReadOnlyField(source='translate_to.name')
+    username = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Translation
         fields = ('id', 'user', 'word', 'translate_to', 'translation', 'confidence_level',
-            'part_of_speech', 'example_sentence', 'iso_639_2_code', 'payment_detail')
+            'part_of_speech', 'example_sentence', 'iso_639_2_code', 'payment_detail',
+            'word_name', 'from_language_name', 'to_language_name', 'username')
 
     def create(self, validated_data):
         translation =  super(TranslationSerializer, self).create(validated_data)

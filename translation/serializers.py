@@ -28,7 +28,7 @@ class TranslationSerializer(InjectUserMixin, serializers.ModelSerializer):
         model = Translation
         fields = ('id', 'user', 'word', 'translate_to', 'translation', 'confidence_level',
             'part_of_speech', 'example_sentence', 'iso_639_2_code', 'payment_detail',
-            'word_name', 'from_language_name', 'to_language_name', 'username')
+            'word_name', 'from_language_name', 'to_language_name', 'username', 'approved')
 
     def create(self, validated_data):
         translation =  super(TranslationSerializer, self).create(validated_data)

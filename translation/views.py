@@ -4,12 +4,16 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
 
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveAPIView
+from rest_framework.generics import (
+    ListAPIView, ListCreateAPIView, RetrieveAPIView,RetrieveUpdateAPIView)
 from rest_framework.response import Response
 
 from .filters import WordFilter
 from .models import Translation, Word, Language, Payment
-from .serializers import TranslationSerializer, WordSerializer, LanguageSerializer, Paymentserializer, LanguageDetailSerializer
+from .serializers import (
+    TranslationSerializer, WordSerializer, LanguageSerializer, Paymentserializer,
+    LanguageDetailSerializer
+)
 
 
 class LanguageSelectListView(ListView):
@@ -55,6 +59,11 @@ class TranslationApiView(ListCreateAPIView):
         if not self.request.user.is_staff:
             return self.queryset.filter(user=self.request.user)
         return self.queryset
+
+
+class TranslationDetailView(RetrieveUpdateAPIView):
+    queryset = Translation.objects.all()
+    serializer_class = TranslationSerializer
 
 
 class WordApiView(ListCreateAPIView):

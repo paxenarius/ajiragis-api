@@ -1,0 +1,78 @@
+{% extends 'ajiragis_api/base.html' %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block navbar %}
+    {% include 'ajiragis_api/nav.html' %}
+{% endblock %}
+{% block content %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Ajira Contribute
+                <small>Approval</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Ajira Contribute</a></li>
+                <li class="active">Approve</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ajira Contribute Approval</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-group list-group-unbordered">
+
+                                        <li class="list-group-item">
+                                            <b>Submitted by</b> <a class="pull-right">{{ data.user.username }}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>Language</b> <a class="pull-right">{{ data.language }}</a>
+                                        </li>
+                                        {% if data.file %}
+                                            <li class="list-group-item">
+                                                <b>File</b>
+                                                <a class="pull-right" href="/media/{{ data.file }}"
+                                                   target="_blank">{{ data.file.name }}</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Text</strong>
+                                    <p class="text-muted">{{ data.text }}</p>
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+
+                            <!-- form start -->
+                            <form enctype="multipart/form-data" role="form" method="post"
+                                  action="{% url 'contribute-approve' data.pk %}">
+                                {% csrf_token %}
+                                {{ form | crispy }}
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+{% endblock content %}

@@ -21,6 +21,7 @@ schema_view = get_swagger_view(title='AjiraGIS API')
 router = routers.DefaultRouter()
 router.register(r'contributions', ContributionViewSet)
 
+
 urlpatterns = [
     path('users/', include('users.urls')),
     path('translations/', TranslationApiView.as_view()),
@@ -33,6 +34,6 @@ urlpatterns = [
     path('rest-auth/', include('rest_auth.urls')),
     path('get_token/', obtain_auth_token, name='get_user_token'),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
-    url(r'^', include(router.urls)),
+    path('data-collect/', include(router.urls)),
     url(r'doc/', schema_view)
 ]

@@ -1,5 +1,8 @@
 from rest_framework import serializers
+
 from translation.models import Language
+from utilities.serializers import InjectUserMixin
+
 from .models import Data
 
 
@@ -9,8 +12,11 @@ class LanguageSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'code')
 
 
-class ContributionSerializer(serializers.ModelSerializer):
+class ContributionSerializer(InjectUserMixin, serializers.ModelSerializer):
+    language_name = serializers.ReadOnlyField(source='language.name')
+    username =  serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Data
-        fields = ('id', 'user', 'language', 'text', 'file')
+        fields = (
+            'id', 'user', 'language', 'text', 'file', 'language_name', 'username')

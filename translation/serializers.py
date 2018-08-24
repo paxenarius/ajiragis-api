@@ -1,17 +1,8 @@
 from rest_framework import serializers
 
+from utilities.serializers import InjectUserMixin
+
 from .models import Translation, Word, Language, Language, Payment
-
-
-class InjectUserMixin(object):
-    def __init__(self, *args, **kwargs):
-        super(InjectUserMixin, self).__init__(*args, **kwargs)
-        self.fields.pop('user')
-
-    def create(self, validated_data):
-        user = self.context.get('request').user
-        validated_data['user'] = user
-        return super(InjectUserMixin, self).create(validated_data)
 
 
 class TranslationSerializer(InjectUserMixin, serializers.ModelSerializer):

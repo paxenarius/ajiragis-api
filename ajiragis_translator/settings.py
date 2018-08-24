@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'api',
     'dashboard',
     'translation',
-    'scripts'
+    'scripts',
+    'contributor',
 ]
 
 MIDDLEWARE = [

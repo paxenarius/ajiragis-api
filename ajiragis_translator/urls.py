@@ -25,5 +25,6 @@ urlpatterns = [
     path('ajiragis/users/', include('django.contrib.auth.urls')),
     path('ajiragis/', include('translation.urls')),
     path('ajiragis/accounts/', include('allauth.urls')),
+    path('ajiragis/contributor/', include('contributor.urls')),
     url(r'^ajiragis/o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]

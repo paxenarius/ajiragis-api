@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.urls import include, path
+from rest_framework import routers
 
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_swagger.views import get_swagger_view
@@ -13,8 +14,13 @@ from translation.views import (
     LanguageDetailApiView,
     TranslationDetailView
 )
+from contributor.views import LanguageViewSet, ContributionViewSet
 
 schema_view = get_swagger_view(title='AjiraGIS API')
+
+router = routers.DefaultRouter()
+router.register(r'contributions', ContributionViewSet)
+
 
 urlpatterns = [
     path('users/', include('users.urls')),
@@ -28,5 +34,6 @@ urlpatterns = [
     path('rest-auth/', include('rest_auth.urls')),
     path('get_token/', obtain_auth_token, name='get_user_token'),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('data-collect/', include(router.urls)),
     url(r'doc/', schema_view)
 ]

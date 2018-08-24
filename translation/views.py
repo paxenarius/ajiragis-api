@@ -16,16 +16,16 @@ from .serializers import (
 )
 
 
-class LanguageSelectListView(ListView):
+class LanguageSelectListView(LoginRequiredMixin, ListView):
     model = Language
     template_name = 'translation/language-select.html'
 
 
-class TranslationListView(ListView):
+class TranslationListView(LoginRequiredMixin, ListView):
     model = Translation
 
 
-class TranslationCreateView(CreateView):
+class TranslationCreateView(LoginRequiredMixin, CreateView):
     model = Translation
     success_url = reverse_lazy('language-select')
     template_name = 'translation/translation-create.html'
@@ -133,9 +133,9 @@ class PaymentApiView(ListCreateAPIView):
     serializer_class = Paymentserializer
 
 
-class WordListView(ListView):
+class WordListView(LoginRequiredMixin, ListView):
     model = Word
 
 
-class WordCreateView(CreateView):
+class WordCreateView(LoginRequiredMixin, CreateView):
     model = Word

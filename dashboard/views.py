@@ -11,7 +11,7 @@ from translation.models import Translation, Payment
 from translation.serializers import TranslationSerializer
 
 
-class Dashboard(TemplateView):
+class Dashboard(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/dashboard.html'
 
 

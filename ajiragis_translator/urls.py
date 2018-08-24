@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from dashboard.views import Dashboard
+from dashboard.views import SocialLoginTemplateView
 
 urlpatterns = [
     path('ajiragis/admin/', admin.site.urls),
@@ -24,6 +25,8 @@ urlpatterns = [
     path('ajiragis/users/', include('users.urls')),
     path('ajiragis/users/', include('django.contrib.auth.urls')),
     path('ajiragis/', include('translation.urls')),
+    path('ajiragis/accounts/login/otp/', include('otp.urls')),
+    path('ajiragis/accounts/login/', SocialLoginTemplateView.as_view() , name='login'),
     path('ajiragis/accounts/', include('allauth.urls')),
     path('ajiragis/contributor/', include('contributor.urls')),
     url(r'^ajiragis/o/', include('oauth2_provider.urls', namespace='oauth2_provider')),

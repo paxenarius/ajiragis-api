@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'translation',
     'scripts',
     'contributor',
+    'otp',
 ]
 
 MIDDLEWARE = [
@@ -139,6 +140,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_ID = 1
 LOGIN_REDIRECT_URL = 'language-select'
 LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL = 'login'
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 CORS_ORIGIN_WHITELIST = ('http://localhost:3000')
 AUTHENTICATION_BACKENDS = (
@@ -188,3 +190,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
+
+OTP_EXPIRY = 3 * 60
+AFRICASTALKING_USERNAME = os.environ.get('AFRICASTALKING_USERNAME', None)
+AFRICASTALKING_API_KEY = os.environ.get('AFRICASTALKING_API_KEY', None)

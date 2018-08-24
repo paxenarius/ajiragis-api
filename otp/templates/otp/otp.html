@@ -14,13 +14,13 @@
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{% static '/ajiragis-translator/assets/bootstrap/dist/css/bootstrap.min.css' %}">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{% static 'ajiragis-translator/assets/font-awesome/css/font-awesome.min.css' %}">
+  <link rel="stylesheet" href="{% static 'ajiragis-translator/assets/font-awesome/css/font-awesome.min.css'%}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="{% static 'ajiragis-translator/assets/Ionicons/css/ionicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'ajiragis-translator/assets/Ionicons/css/ionicons.min.css'%}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'ajiragis-translator/dist/css/AdminLTE.css' %}">
+  <link rel="stylesheet" href="{% static 'ajiragis-translator/dist/css/AdminLTE.css'%}">
   <!-- iCheck -->
-  <link rel="stylesheet" href="{% static 'ajiragis-translator/plugins/iCheck/square/blue.css' %}">
+  <link rel="stylesheet" href="{% static 'ajiragis-translator/plugins/iCheck/square/blue.css'%}">
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -30,7 +30,7 @@
   <div class="login-box">
     <div class="login-logo">
       <a href="#">
-        <b>AJIRA</b>GIS</a>
+        <b>AJIRA</b>GIS</a> OTP
     </div>
     <!-- /.login-logo -->
     {% if user.is_authenticated %}
@@ -43,43 +43,39 @@
       << to enter system </div>
         {% else %}
         <div class="login-box-body">
-          <p class="login-box-msg">Sign in to start your session</p>
-
-          <form action="{% url 'login' %}" method="post">
+        {% if not show_pin_input %}
+            <p class="login-box-msg">Please enter your phone number to verify your identity</p>
+        {% endif %}
+        {% if errors %}
+            <h4><i class="icon fa fa-warning"></i> Form Invalid!</h4>
+                {% for error in errors %}
+                    <div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                {{ error }}
+              </div>
+                {% endfor %}
+        {% endif %}
+          <form action="{% url 'otp' %}" method="post">
             {% csrf_token %}
             <div class="form-group has-feedback">
-              <input type="text" name="username" class="form-control" placeholder="Username">
-              <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+              <input type="number" name="phone" class="form-control" placeholder="07********" value="{{ phone }}" required {% if show_pin_input %}readonly{% endif %}>
+              <span class="glyphicon glyphicon-phone form-control-feedback"></span>
             </div>
-            <div class="form-group has-feedback">
-              <input type="password" class="form-control" placeholder="Password">
+              {% if show_pin_input %}
+                  <p class="login-box-msg">Please enter PIN Number Sent to your Mobile for Verification</p>
+                  <div class="form-group has-feedback">
+              <input type="text" class="form-control" placeholder="PIN" name="pin">
               <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
+              {% endif %}
             <div class="row">
-              <div class="col-xs-8">
-                <div class="checkbox icheck">
-                  <label>
-                    <input type="checkbox"> Remember Me
-                  </label>
-                </div>
-              </div>
               <!-- /.col -->
-              <div class="col-xs-4">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+              <div class="col-md-12">
+                <button type="submit" class="btn {% if show_pin_input %}btn-danger{% else %}btn-primary{% endif %} btn-block btn-flat">{% if show_pin_input %}VERIFY{% else %}SEND CODE{% endif %}</button>
               </div>
               <!-- /.col -->
             </div>
           </form>
-
-          <div class="social-auth-links text-center">
-            <p>- OR -</p>
-            <a href="{% provider_login_url 'google' %}" class="btn btn-block btn-social btn-google btn-flat">
-              <i class="fa fa-google-plus"></i> Sign in using Google
-            </a>
-              <a href="{% url 'otp' %}" class="btn btn-block btn-social btn-linkedin">
-              <i class="fa fa-phone"></i> Sign in with Phone Number
-            </a>
-          </div>
           <!-- /.social-auth-links -->
 
           <!--a href="#">I forgot my password</a><br>
@@ -92,11 +88,11 @@
     <!-- /.login-box -->
 
     <!-- jQuery 3 -->
-    <script src="{% static 'ajiragis-translator/assets/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'ajiragis-translator/assets/jquery/dist/jquery.min.js'%}"></script>
     <!-- Bootstrap 3.3.7 -->
-    <script src="{% static 'ajiragis-translator/assets/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'ajiragis-translator/assets/bootstrap/dist/js/bootstrap.min.js'%}"></script>
     <!-- iCheck -->
-    <script src="{% static 'ajiragis-translator/plugins/iCheck/icheck.min.js' %}"></script>
+    <script src="{% static 'ajiragis-translator/plugins/iCheck/icheck.min.js'%}"></script>
     <script>
       $(function () {
         $('input').iCheck({

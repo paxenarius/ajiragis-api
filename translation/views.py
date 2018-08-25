@@ -4,12 +4,16 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
 
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveAPIView
+from rest_framework.generics import (
+    ListAPIView, ListCreateAPIView, RetrieveAPIView,RetrieveUpdateAPIView)
 from rest_framework.response import Response
 
 from .filters import WordFilter
 from .models import Translation, Word, Language, Payment
-from .serializers import TranslationSerializer, WordSerializer, LanguageSerializer, Paymentserializer, LanguageDetailSerializer
+from .serializers import (
+    TranslationSerializer, WordSerializer, LanguageSerializer, Paymentserializer,
+    LanguageDetailSerializer
+)
 
 
 class LanguageSelectListView(LoginRequiredMixin, ListView):
@@ -50,17 +54,16 @@ class TranslationApiView(ListCreateAPIView):
     serializer_class = TranslationSerializer
     filter_fields = ('user', )
 
-    def post(self, request, *args, **kwargs):
-        """
-        As the a translation is being made, a payment record is made.
-        The default approved status is False. The default amount/points is 1.
-        """
-        instance = super().post(request, *args, **kwargs)
-        Payment.objects.create(
-            translation_id=instance.data.get('id'),
-            user_id=instance.data.get('user')
-        )
-        return Response(instance.data)
+    def get_queryset(self, *args, **kwargs):
+        return self.queryset.filter(id__gte=20)
+        if not self.request.user.is_staff:
+            return self.queryset.filter(user=self.request.user)
+        return self.queryset
+
+
+class TranslationDetailView(RetrieveUpdateAPIView):
+    queryset = Translation.objects.all()
+    serializer_class = TranslationSerializer
 
 
 class WordApiView(ListCreateAPIView):

@@ -55,7 +55,6 @@ class TranslationApiView(ListCreateAPIView):
     filter_fields = ('user', )
 
     def get_queryset(self, *args, **kwargs):
-        return self.queryset.filter(id__gte=20)
         if not self.request.user.is_staff:
             return self.queryset.filter(user=self.request.user)
         return self.queryset
